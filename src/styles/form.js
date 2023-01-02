@@ -2,21 +2,24 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   form: {
-    paddingTop: 32,
-    paddingBottom: 32,
+    paddingVertical: 32,
     paddingHorizontal: 16,
     position: "relative",
     backgroundColor: "#fff",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     alignItems: "center",
-    flex: 0.65,
+    flex: 0.7,
   },
   registerForm: {
-    paddingTop: 102,
+    paddingTop: 86,
+  },
+  fieldsContainer: {
+    width: "100%",
+    flex: 1,
   },
   fields: {
-    paddingTop: 32,
+    paddingVertical: 16,
     flexDirection: "column",
     width: "100%",
   },
@@ -36,8 +39,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   btn: {
-    marginTop: 8,
-    marginBottom: 16,
+    marginTop: 32,
+    marginBottom: 8,
     paddingVertical: Platform.OS === "ios" ? 16 : 12,
     backgroundColor: "#FF6C00",
     borderRadius: 8,

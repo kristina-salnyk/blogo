@@ -22,13 +22,18 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
+  icon: {
+    position: "absolute",
+    top: 100,
+    left: 125,
+  },
   title: {
     fontSize: 28,
     fontWeight: "bold",
   },
 
   link: {
-    paddingVertical: 16,
+    paddingVertical: 8,
   },
 });
 

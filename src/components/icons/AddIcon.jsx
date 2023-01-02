@@ -1,9 +1,8 @@
 import Svg, { Circle, Path } from "react-native-svg";
-import { StyleSheet } from "react-native";
 
-const ImageIcon = () => {
+const AddIcon = (props) => {
   return (
-    <Svg style={styles.icon} width={25} height={25} fill="none">
+    <Svg width={25} height={25} fill="none" {...props}>
       <Circle cx={12.5} cy={12.5} r={12} stroke="#FF6C00" />
       <Path
         fill="#FF6C00"
@@ -15,12 +14,4 @@ const ImageIcon = () => {
   );
 };
 
-export default ImageIcon;
-
-const styles = StyleSheet.create({
-  icon: {
-    position: "absolute",
-    top: 100,
-    left: 125,
-  },
-});
+export default AddIcon;
