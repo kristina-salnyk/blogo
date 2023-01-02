@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   View,
   ImageBackground,
+  Image,
   Text,
   TouchableOpacity,
   KeyboardAvoidingView,
@@ -12,10 +13,13 @@ import {
 import { TextInput } from "react-native-paper";
 import commonStyles from "../styles/common-styles";
 import formStyles from "../styles/form-styles";
+import ImageIcon from "../Components/ImageIcon";
 
 const bgImg = require("../../assets/images/background.jpg");
+const userImg = require("../../assets/images/default-user.png");
 
-const LoginScreen = () => {
+const RegistrationScreen = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isHidden, setIsHidden] = useState(true);
@@ -25,11 +29,24 @@ const LoginScreen = () => {
       <View style={commonStyles.container}>
         <ImageBackground source={bgImg} style={commonStyles.bg}>
           <KeyboardAvoidingView
-            style={formStyles.form}
+            style={{ ...formStyles.form, ...formStyles.registerForm }}
             behavior={Platform.OS == "ios" ? "padding" : null}
           >
-            <Text style={commonStyles.title}>Login</Text>
+            <View style={commonStyles.profileImg}>
+              <Image style={commonStyles.img} source={userImg} />
+              <ImageIcon />
+            </View>
+            <Text style={commonStyles.title}>Registration</Text>
             <View style={formStyles.fields}>
+              <TextInput
+                style={formStyles.input}
+                value={name}
+                placeholder="Name"
+                mode="outlined"
+                outlineColor="#cccbc8"
+                activeOutlineColor="#FF6C00"
+                onChangeText={(text) => setName(text)}
+              />
               <TextInput
                 style={formStyles.input}
                 value={email}
@@ -58,11 +75,11 @@ const LoginScreen = () => {
                 </TouchableOpacity>
               </View>
               <TouchableOpacity style={formStyles.btn} onPress={() => {}}>
-                <Text style={formStyles.btnTitle}>Login</Text>
+                <Text style={formStyles.btnTitle}>Register</Text>
               </TouchableOpacity>
             </View>
             <TouchableOpacity style={commonStyles.link} onPress={() => {}}>
-              <Text>Don't have an account? Register</Text>
+              <Text>Already have an account? Login</Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>
         </ImageBackground>
@@ -71,4 +88,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default RegistrationScreen;
