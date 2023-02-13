@@ -1,25 +1,44 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useTheme } from "styled-components/native";
 import PostsScreen from "./PostsScreen";
 import ProfileScreen from "./ProfileScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
 import PostsIcon from "../components/icons/PostsIcon";
 import CreatePostsIcon from "../components/icons/CreatePostsIcon";
 import ProfileIcon from "../components/icons/ProfileIcon";
+import LogoutIcon from "../components/icons/LogoutIcon";
 
 const Tabs = createBottomTabNavigator();
 
 const Home = ({ navigation }) => {
+  const theme = useTheme();
+
   return (
-    <Tabs.Navigator tabBarOptions={{ showLabel: false }}>
+    <Tabs.Navigator
+      screenOptions={{
+        headerTitleAlign: "center",
+        headerRightContainerStyle: { paddingRight: theme.spacing[1] },
+        tabBarShowLabel: false,
+        tabBarStyle: [
+          {
+            display: "flex",
+          },
+          null,
+        ],
+      }}
+    >
       <Tabs.Screen
         options={{
           tabBarIcon: ({ focused, size, color }) => (
             <PostsIcon size={size} color={color} />
           ),
+          tabBarActiveTintColor: theme.colors.main,
+          headerRight: LogoutIcon,
         }}
         name="Posts"
         component={PostsScreen}
+        style={{ backgroundColor: theme.colors.white }}
       />
       <Tabs.Screen
         options={{
@@ -35,6 +54,7 @@ const Home = ({ navigation }) => {
           tabBarIcon: ({ focused, size, color }) => (
             <ProfileIcon size={size} color={color} />
           ),
+          tabBarActiveTintColor: theme.colors.main,
         }}
         name="Profile"
         component={ProfileScreen}

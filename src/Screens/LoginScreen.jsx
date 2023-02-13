@@ -1,19 +1,26 @@
 import { useEffect, useState } from "react";
 import {
-  View,
-  ImageBackground,
   Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
   Dimensions,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { TextInput } from "react-native-paper";
-import commonStyles from "../styles/common";
-import formStyles from "../styles/form";
+import Field from "../components/Field/Field";
+import Button from "../components/Button/Button";
+import {
+  Background,
+  Container,
+} from "../components/Container/Container.styled";
+import {
+  FormContent,
+  Form,
+  Fields,
+  FieldWrap,
+  FieldControl,
+  Heading,
+} from "../components/Form/Form.styled";
+import { Link } from "../components/Link/Link.styled";
 
 const bgImg = require("../../assets/images/background.jpg");
 
@@ -31,9 +38,9 @@ const LoginScreen = ({ navigation }) => {
     };
 
     Dimensions.addEventListener("change", onChange);
-    return () => {
-      Dimensions.removeEventListener("change", onChange);
-    };
+    // return () => {
+    //   Dimensions.removeEventListener("change", onChange);
+    // };
   }, []);
 
   const onLogin = () => {
@@ -51,68 +58,49 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={commonStyles.container}>
-        <ImageBackground source={bgImg} style={commonStyles.bg}>
-          <KeyboardAvoidingView
-            style={{
-              ...formStyles.form,
-              flex: dimensions >= 500 ? 0.8 : 0.6,
-              ...(dimensions >= 500 ? { marginHorizontal: 64 } : null),
-            }}
-            behavior={Platform.OS == "ios" ? "padding" : null}
+      <Container>
+        <Background source={bgImg}>
+          <Form
+            dimensions={dimensions}
+            behavior={Platform.OS === "ios" ? "padding" : null}
           >
-            <ScrollView
-              style={formStyles.fieldsContainer}
+            <FormContent
+              dimensions={dimensions}
+              os={Platform.OS}
               contentContainerStyle={{
                 alignItems: "center",
-                ...(dimensions >= 500 && Platform.OS === "ios"
-                  ? { paddingBottom: 32 }
-                  : null),
               }}
             >
-              <Text style={commonStyles.title}>Login</Text>
-              <View style={formStyles.fields}>
-                <TextInput
-                  style={formStyles.input}
+              <Heading>Login</Heading>
+              <Fields>
+                <Field
                   value={email}
                   placeholder="E-mail"
-                  mode="outlined"
-                  outlineColor="#cccbc8"
-                  activeOutlineColor="#FF6C00"
                   onChangeText={(text) => setEmail(text)}
                 />
-                <View style={formStyles.field}>
-                  <TextInput
-                    style={formStyles.input}
+                <FieldWrap>
+                  <Field
                     value={password}
                     placeholder="Password"
-                    mode="outlined"
-                    outlineColor="#cccbc8"
-                    activeOutlineColor="#FF6C00"
                     onChangeText={(text) => setPassword(text)}
                     secureTextEntry={isHidden}
                   />
-                  <TouchableOpacity
-                    style={formStyles.inputControl}
+                  <FieldControl
+                    os={Platform.OS}
                     onPress={() => setIsHidden((prevState) => !prevState)}
                   >
                     <Text>{isHidden ? "Show" : "Hide"}</Text>
-                  </TouchableOpacity>
-                </View>
-                <TouchableOpacity style={formStyles.btn} onPress={onLogin}>
-                  <Text style={formStyles.btnTitle}>Login</Text>
-                </TouchableOpacity>
-              </View>
-              <TouchableOpacity
-                style={commonStyles.link}
-                onPress={() => navigation.navigate("Registration")}
-              >
+                  </FieldControl>
+                </FieldWrap>
+                <Button text="Login" onPress={onLogin} />
+              </Fields>
+              <Link onPress={() => navigation.navigate("Registration")}>
                 <Text>Don't have an account? Register</Text>
-              </TouchableOpacity>
-            </ScrollView>
-          </KeyboardAvoidingView>
-        </ImageBackground>
-      </View>
+              </Link>
+            </FormContent>
+          </Form>
+        </Background>
+      </Container>
     </TouchableWithoutFeedback>
   );
 };

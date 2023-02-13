@@ -1,24 +1,29 @@
 import { useState, useEffect } from "react";
 import {
-  View,
-  ImageBackground,
-  Image,
   Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
   Dimensions,
-  ScrollView,
 } from "react-native";
-import { TextInput } from "react-native-paper";
-import commonStyles from "../styles/common";
-import formStyles from "../styles/form";
-import AddIcon from "../components/icons/AddIcon";
+import Field from "../components/Field/Field";
+import Button from "../components/Button/Button";
+import Avatar from "../components/Avatar/Avatar";
+import {
+  Background,
+  Container,
+} from "../components/Container/Container.styled";
+import {
+  FormContent,
+  Form,
+  Fields,
+  FieldWrap,
+  FieldControl,
+  Heading,
+} from "../components/Form/Form.styled";
+import { Link } from "../components/Link/Link.styled";
 
 const bgImg = require("../../assets/images/background.jpg");
-const userImg = require("../../assets/images/default-user.png");
 
 const RegistrationScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -36,9 +41,9 @@ const RegistrationScreen = ({ navigation }) => {
     };
 
     Dimensions.addEventListener("change", onChange);
-    return () => {
-      Dimensions.removeEventListener("change", onChange);
-    };
+    // return () => {
+    //   Dimensions.removeEventListener("change", onChange);
+    // };
   }, []);
 
   const onRegister = () => {
@@ -56,81 +61,60 @@ const RegistrationScreen = ({ navigation }) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={commonStyles.container}>
-        <ImageBackground source={bgImg} style={commonStyles.bg}>
-          <KeyboardAvoidingView
+      <Container>
+        <Background source={bgImg}>
+          <Form
             style={{
-              ...formStyles.form,
-              ...formStyles.registerForm,
-              ...(dimensions >= 500 ? { marginHorizontal: 64 } : null),
+              paddingTop: 86,
+              flex: 0.7,
             }}
-            behavior={Platform.OS == "ios" ? "padding" : null}
+            os={Platform.OS}
+            dimensions={dimensions}
+            behavior={Platform.OS === "ios" ? "padding" : null}
           >
-            <View style={commonStyles.profileImg}>
-              <Image style={commonStyles.img} source={userImg} />
-              <AddIcon style={commonStyles.icon} />
-            </View>
-            <ScrollView
-              style={formStyles.fieldsContainer}
+            <Avatar />
+            <FormContent
+              dimensions={dimensions}
+              os={Platform.OS}
               contentContainerStyle={{
                 alignItems: "center",
-                ...(dimensions >= 500 && Platform.OS === "ios"
-                  ? { paddingBottom: 32 }
-                  : null),
               }}
             >
-              <Text style={commonStyles.title}>Registration</Text>
-              <View style={formStyles.fields}>
-                <TextInput
-                  style={formStyles.input}
+              <Heading>Registration</Heading>
+              <Fields>
+                <Field
                   value={name}
                   placeholder="Name"
-                  mode="outlined"
-                  outlineColor="#cccbc8"
-                  activeOutlineColor="#FF6C00"
                   onChangeText={(text) => setName(text)}
                 />
-                <TextInput
-                  style={formStyles.input}
+                <Field
                   value={email}
                   placeholder="E-mail"
-                  mode="outlined"
-                  outlineColor="#cccbc8"
-                  activeOutlineColor="#FF6C00"
                   onChangeText={(text) => setEmail(text)}
                 />
-                <View style={formStyles.field}>
-                  <TextInput
-                    style={formStyles.input}
+                <FieldWrap>
+                  <Field
                     value={password}
                     placeholder="Password"
-                    mode="outlined"
-                    outlineColor="#cccbc8"
-                    activeOutlineColor="#FF6C00"
                     onChangeText={(text) => setPassword(text)}
                     secureTextEntry={isHidden}
                   />
-                  <TouchableOpacity
-                    style={formStyles.inputControl}
+                  <FieldControl
+                    os={Platform.OS}
                     onPress={() => setIsHidden((prevState) => !prevState)}
                   >
                     <Text>{isHidden ? "Show" : "Hide"}</Text>
-                  </TouchableOpacity>
-                </View>
-                <TouchableOpacity style={formStyles.btn} onPress={onRegister}>
-                  <Text style={formStyles.btnTitle}>Register</Text>
-                </TouchableOpacity>
-              </View>
-              <TouchableOpacity
-                style={commonStyles.link}
-                onPress={() => navigation.navigate("Login")}
-              >
+                  </FieldControl>
+                </FieldWrap>
+                <Button text="Register" onPress={onRegister} />
+              </Fields>
+              <Link onPress={() => navigation.navigate("Login")}>
                 <Text>Already have an account? Login</Text>
-              </TouchableOpacity>
-            </ScrollView>
-          </KeyboardAvoidingView>
-        </ImageBackground>
-      </View>
+              </Link>
+            </FormContent>
+          </Form>
+        </Background>
+      </Container>
     </TouchableWithoutFeedback>
   );
 };
