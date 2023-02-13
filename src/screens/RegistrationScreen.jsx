@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import {
-  Text,
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
@@ -8,10 +7,11 @@ import {
 } from "react-native";
 import Field from "../components/Field/Field";
 import Button from "../components/Button/Button";
-import Avatar from "../components/Avatar/Avatar";
+import Link from "../components/Link/Link";
 import {
   Background,
   Container,
+  Avatar,
 } from "../components/Container/Container.styled";
 import {
   FormContent,
@@ -19,11 +19,14 @@ import {
   Fields,
   FieldWrap,
   FieldControl,
-  Heading,
+  Title,
+  ControlText,
+  Icon,
+  AvatarWrap,
 } from "../components/Form/Form.styled";
-import { Link } from "../components/Link/Link.styled";
 
-const bgImg = require("../../assets/images/background.jpg");
+const bgImg = require("../../assets/img/background.jpg");
+const userImg = require("../../assets/img/default-user.png");
 
 const RegistrationScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -37,7 +40,6 @@ const RegistrationScreen = ({ navigation }) => {
     const onChange = () => {
       const width = Dimensions.get("window").width;
       setDimensions(width);
-      console.log(width);
     };
 
     Dimensions.addEventListener("change", onChange);
@@ -72,7 +74,10 @@ const RegistrationScreen = ({ navigation }) => {
             dimensions={dimensions}
             behavior={Platform.OS === "ios" ? "padding" : null}
           >
-            <Avatar />
+            <AvatarWrap>
+              <Avatar source={userImg} />
+              <Icon />
+            </AvatarWrap>
             <FormContent
               dimensions={dimensions}
               os={Platform.OS}
@@ -80,7 +85,7 @@ const RegistrationScreen = ({ navigation }) => {
                 alignItems: "center",
               }}
             >
-              <Heading>Registration</Heading>
+              <Title>Registration</Title>
               <Fields>
                 <Field
                   value={name}
@@ -103,14 +108,15 @@ const RegistrationScreen = ({ navigation }) => {
                     os={Platform.OS}
                     onPress={() => setIsHidden((prevState) => !prevState)}
                   >
-                    <Text>{isHidden ? "Show" : "Hide"}</Text>
+                    <ControlText>{isHidden ? "Show" : "Hide"}</ControlText>
                   </FieldControl>
                 </FieldWrap>
                 <Button text="Register" onPress={onRegister} />
               </Fields>
-              <Link onPress={() => navigation.navigate("Login")}>
-                <Text>Already have an account? Login</Text>
-              </Link>
+              <Link
+                text="Already have an account? Login"
+                onPress={() => navigation.navigate("Login")}
+              />
             </FormContent>
           </Form>
         </Background>

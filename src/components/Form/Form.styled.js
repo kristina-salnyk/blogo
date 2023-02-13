@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import AddIcon from "../icons/AddIcon";
 
 export const Form = styled.KeyboardAvoidingView`
   padding: ${({ theme }) => theme.spacing[2]}px
@@ -21,7 +22,7 @@ export const FormContent = styled.ScrollView`
     dimensions >= 500 && os === "ios" ? theme.spacing[2] : 0}px;
 `;
 
-export const Heading = styled.Text`
+export const Title = styled.Text`
   font-size: ${({ theme }) => theme.typography.size.xl};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 `;
@@ -42,4 +43,23 @@ export const FieldControl = styled.TouchableOpacity`
   top: ${({ os }) => (os === "ios" ? 23 : 21)}px;
   justify-content: center;
   z-index: 1;
+`;
+
+export const ControlText = styled.Text`
+  color: ${({ theme }) => theme.colors.text.primary};
+`;
+
+export const AvatarWrap = styled.View`
+  position: absolute;
+  top: -70px;
+  width: 140px;
+  height: 140px;
+  background-color: ${({ theme }) => theme.colors.fill};
+  border-radius: ${({ theme }) => theme.shape.borderRadius.s}px;
+`;
+
+export const Icon = styled(AddIcon)`
+  position: absolute;
+  top: 100px;
+  left: 125px;
 `;

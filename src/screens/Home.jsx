@@ -26,6 +26,10 @@ const Home = ({ navigation }) => {
           },
           null,
         ],
+        headerStyle: {
+          borderBottomColor: theme.colors.bottom,
+          borderBottomWidth: theme.shape.borderWidth,
+        },
       }}
     >
       <Tabs.Screen
@@ -36,7 +40,7 @@ const Home = ({ navigation }) => {
           tabBarActiveTintColor: theme.colors.main,
           headerRight: LogoutIcon,
         }}
-        name="Posts"
+        name="Publications"
         component={PostsScreen}
         style={{ backgroundColor: theme.colors.white }}
       />
@@ -55,6 +59,7 @@ const Home = ({ navigation }) => {
             <ProfileIcon size={size} color={color} />
           ),
           tabBarActiveTintColor: theme.colors.main,
+          headerShown: false,
         }}
         name="Profile"
         component={ProfileScreen}

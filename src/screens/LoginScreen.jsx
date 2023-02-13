@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  Text,
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
@@ -8,6 +7,7 @@ import {
 } from "react-native";
 import Field from "../components/Field/Field";
 import Button from "../components/Button/Button";
+import Link from "../components/Link/Link";
 import {
   Background,
   Container,
@@ -18,11 +18,11 @@ import {
   Fields,
   FieldWrap,
   FieldControl,
-  Heading,
+  Title,
+  ControlText,
 } from "../components/Form/Form.styled";
-import { Link } from "../components/Link/Link.styled";
 
-const bgImg = require("../../assets/images/background.jpg");
+const bgImg = require("../../assets/img/background.jpg");
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -71,7 +71,7 @@ const LoginScreen = ({ navigation }) => {
                 alignItems: "center",
               }}
             >
-              <Heading>Login</Heading>
+              <Title>Login</Title>
               <Fields>
                 <Field
                   value={email}
@@ -89,14 +89,15 @@ const LoginScreen = ({ navigation }) => {
                     os={Platform.OS}
                     onPress={() => setIsHidden((prevState) => !prevState)}
                   >
-                    <Text>{isHidden ? "Show" : "Hide"}</Text>
+                    <ControlText>{isHidden ? "Show" : "Hide"}</ControlText>
                   </FieldControl>
                 </FieldWrap>
                 <Button text="Login" onPress={onLogin} />
               </Fields>
-              <Link onPress={() => navigation.navigate("Registration")}>
-                <Text>Don't have an account? Register</Text>
-              </Link>
+              <Link
+                text="Don't have an account? Register"
+                onPress={() => navigation.navigate("Registration")}
+              />
             </FormContent>
           </Form>
         </Background>
