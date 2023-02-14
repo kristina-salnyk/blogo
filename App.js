@@ -4,7 +4,7 @@ import { ThemeProvider } from "styled-components/native";
 import theme from "./src/theme.js";
 
 export default function App() {
-  const route = useRoute(null);
+  const route = useRoute(true);
 
   return (
     <ThemeProvider theme={theme}>

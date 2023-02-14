@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import Post from "../components/Post/Post";
 import PostHeader from "../components/PostHeader/PostHeader";
@@ -47,6 +47,7 @@ const initPosts = [
 const PostsScreen = ({ navigation }) => {
   const [posts, setPosts] = useState(initPosts);
 
+  useEffect(() => {});
   return (
     <Container>
       <Content>

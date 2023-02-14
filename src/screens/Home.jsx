@@ -1,59 +1,90 @@
-import React from "react";
+import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "styled-components/native";
 import PostsScreen from "./PostsScreen";
 import ProfileScreen from "./ProfileScreen";
-import CreatePostsScreen from "./CreatePostsScreen";
+import CreatePostScreen from "./CreatePostScreen";
 import PostsIcon from "../components/icons/PostsIcon";
 import CreatePostsIcon from "../components/icons/CreatePostsIcon";
 import ProfileIcon from "../components/icons/ProfileIcon";
 import LogoutIcon from "../components/icons/LogoutIcon";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useRoute } from "../contexts/Route";
 
-const Tabs = createBottomTabNavigator();
+const HomeTabs = createBottomTabNavigator();
+const PostStack = createNativeStackNavigator();
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation, route }) => {
   const theme = useTheme();
+  const { currentRouteName, setCurrentRouteName } = useRoute();
 
   return (
-    <Tabs.Navigator
+    <HomeTabs.Navigator
       screenOptions={{
         headerTitleAlign: "center",
         headerRightContainerStyle: { paddingRight: theme.spacing[1] },
-        tabBarShowLabel: false,
-        tabBarStyle: [
-          {
-            display: "flex",
-          },
-          null,
-        ],
         headerStyle: {
           borderBottomColor: theme.colors.bottom,
           borderBottomWidth: theme.shape.borderWidth,
         },
+        tabBarShowLabel: false,
+        tabBarStyle: [
+          {
+            display:
+              currentRouteName === "Create publication" ? "none" : "flex",
+          },
+          null,
+        ],
       }}
     >
-      <Tabs.Screen
+      <HomeTabs.Screen
         options={{
           tabBarIcon: ({ focused, size, color }) => (
             <PostsIcon size={size} color={color} />
           ),
           tabBarActiveTintColor: theme.colors.main,
-          headerRight: LogoutIcon,
+          headerShown: false,
         }}
-        name="Publications"
-        component={PostsScreen}
-        style={{ backgroundColor: theme.colors.white }}
-      />
-      <Tabs.Screen
+        name="Posts"
+      >
+        {() => (
+          <PostStack.Navigator
+            screenOptions={{
+              headerTitleAlign: "center",
+              headerBackTitle: "",
+            }}
+          >
+            <PostStack.Screen
+              options={{ headerRight: LogoutIcon }}
+              name="Publications"
+              component={PostsScreen}
+            />
+            <PostStack.Screen
+              name="Create publication"
+              component={CreatePostScreen}
+            ></PostStack.Screen>
+          </PostStack.Navigator>
+        )}
+      </HomeTabs.Screen>
+      <HomeTabs.Screen
         options={{
           tabBarIcon: ({ focused, size, color }) => (
             <CreatePostsIcon size={size} color={color} />
           ),
         }}
-        name="CreatePosts"
-        component={CreatePostsScreen}
+        name="Create post"
+        component={Home}
+        listeners={({ navigation }) => ({
+          tabPress: (event) => {
+            event.preventDefault();
+            setCurrentRouteName("Create publication");
+            navigation.navigate("Posts", {
+              screen: "Create publication",
+            });
+          },
+        })}
       />
-      <Tabs.Screen
+      <HomeTabs.Screen
         options={{
           tabBarIcon: ({ focused, size, color }) => (
             <ProfileIcon size={size} color={color} />
@@ -64,7 +95,7 @@ const Home = ({ navigation }) => {
         name="Profile"
         component={ProfileScreen}
       />
-    </Tabs.Navigator>
+    </HomeTabs.Navigator>
   );
 };
 
