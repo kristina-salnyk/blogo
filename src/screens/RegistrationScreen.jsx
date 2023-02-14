@@ -5,28 +5,20 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
 } from "react-native";
-import Field from "../components/Field/Field";
+import Input from "../components/Input/Input";
 import Button from "../components/Button/Button";
 import Link from "../components/Link/Link";
-import {
-  Background,
-  Container,
-  Avatar,
-} from "../components/Container/Container.styled";
+import Container from "../components/Container/Container";
+import Avatar from "../components/Avatar/Avatar";
+import { Title } from "../components/Container/Container.styled";
 import {
   FormContent,
   Form,
   Fields,
-  FieldWrap,
-  FieldControl,
-  Title,
+  InputWrap,
+  InputControl,
   ControlText,
-  Icon,
-  AvatarWrap,
 } from "../components/Form/Form.styled";
-
-const bgImg = require("../../assets/img/background.jpg");
-const userImg = require("../../assets/img/default-user.png");
 
 const RegistrationScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -43,83 +35,67 @@ const RegistrationScreen = ({ navigation }) => {
     };
 
     Dimensions.addEventListener("change", onChange);
-    // return () => {
-    //   Dimensions.removeEventListener("change", onChange);
-    // };
   }, []);
 
   const onRegister = () => {
     const data = { name, email, password };
     console.log(data);
-
-    // navigation.reset({
-    //   index: 1,
-    //   actions: [navigation.navigate({ routeName: "Home" })],
-    // });
-    // navigation.navigate("Home", {
-    //   screen: "Posts",
-    // });
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
-        <Background source={bgImg}>
-          <Form
-            style={{
-              paddingTop: 86,
-              flex: 0.7,
-            }}
-            os={Platform.OS}
+        <Form
+          style={{
+            paddingTop: 86,
+            flex: 0.7,
+          }}
+          os={Platform.OS}
+          dimensions={dimensions}
+          behavior={Platform.OS === "ios" ? "padding" : null}
+        >
+          <Avatar />
+          <FormContent
             dimensions={dimensions}
-            behavior={Platform.OS === "ios" ? "padding" : null}
+            os={Platform.OS}
+            contentContainerStyle={{
+              alignItems: "center",
+            }}
           >
-            <AvatarWrap>
-              <Avatar source={userImg} />
-              <Icon />
-            </AvatarWrap>
-            <FormContent
-              dimensions={dimensions}
-              os={Platform.OS}
-              contentContainerStyle={{
-                alignItems: "center",
-              }}
-            >
-              <Title>Registration</Title>
-              <Fields>
-                <Field
-                  value={name}
-                  placeholder="Name"
-                  onChangeText={(text) => setName(text)}
-                />
-                <Field
-                  value={email}
-                  placeholder="E-mail"
-                  onChangeText={(text) => setEmail(text)}
-                />
-                <FieldWrap>
-                  <Field
-                    value={password}
-                    placeholder="Password"
-                    onChangeText={(text) => setPassword(text)}
-                    secureTextEntry={isHidden}
-                  />
-                  <FieldControl
-                    os={Platform.OS}
-                    onPress={() => setIsHidden((prevState) => !prevState)}
-                  >
-                    <ControlText>{isHidden ? "Show" : "Hide"}</ControlText>
-                  </FieldControl>
-                </FieldWrap>
-                <Button text="Register" onPress={onRegister} />
-              </Fields>
-              <Link
-                text="Already have an account? Login"
-                onPress={() => navigation.navigate("Login")}
+            <Title>Registration</Title>
+            <Fields>
+              <Input
+                value={name}
+                placeholder="Name"
+                onChangeText={(text) => setName(text)}
               />
-            </FormContent>
-          </Form>
-        </Background>
+              <Input
+                value={email}
+                placeholder="E-mail"
+                onChangeText={(text) => setEmail(text)}
+              />
+              <InputWrap>
+                <Input
+                  value={password}
+                  placeholder="Password"
+                  onChangeText={(text) => setPassword(text)}
+                  secureTextEntry={isHidden}
+                />
+                <InputControl
+                  os={Platform.OS}
+                  onPress={() => setIsHidden((prevState) => !prevState)}
+                >
+                  <ControlText>{isHidden ? "Show" : "Hide"}</ControlText>
+                </InputControl>
+              </InputWrap>
+              <Button text="Register" onPress={onRegister} />
+            </Fields>
+            <Link
+              text="Already have an account? Login"
+              onPress={() => navigation.navigate("Login")}
+            />
+          </FormContent>
+        </Form>
       </Container>
     </TouchableWithoutFeedback>
   );

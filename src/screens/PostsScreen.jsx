@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { FlatList } from "react-native";
 import Post from "../components/Post/Post";
-import { PostsContent } from "../components/PostsList/PostsList.styled";
-import { Container } from "../components/Container/Container.styled";
+import PostHeader from "../components/PostHeader/PostHeader";
+import { Container, Content } from "../components/Container/Container.styled";
+import { Posts } from "../components/Posts/Posts.styled";
 
 const userImg = require("../../assets/img/default-user.png");
 const postImg = require("../../assets/img/post.jpg");
@@ -48,13 +49,17 @@ const PostsScreen = ({ navigation }) => {
 
   return (
     <Container>
-      <PostsContent>
-        <FlatList
-          data={posts}
-          renderItem={({ item }) => <Post {...item} />}
-          keyExtractor={(item) => item.id}
-        />
-      </PostsContent>
+      <Content>
+        <Posts>
+          <FlatList
+            data={posts}
+            renderItem={({ item }) => (
+              <Post header={<PostHeader {...item} />} {...item}></Post>
+            )}
+            keyExtractor={(item) => item.id}
+          />
+        </Posts>
+      </Content>
     </Container>
   );
 };

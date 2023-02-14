@@ -1,9 +1,6 @@
 import styled from "styled-components/native";
-import AddIcon from "../icons/AddIcon";
 
 export const Form = styled.KeyboardAvoidingView`
-  padding: ${({ theme }) => theme.spacing[2]}px
-    ${({ theme }) => theme.spacing[1]}px;
   position: relative;
   background-color: ${({ theme }) => theme.colors.white};
   border-top-left-radius: ${({ theme }) => theme.shape.borderRadius.m}px;
@@ -16,15 +13,11 @@ export const Form = styled.KeyboardAvoidingView`
 `;
 
 export const FormContent = styled.ScrollView`
-  width: 100%;
-  flex: 1;
+  padding: 0 ${({ theme }) => theme.spacing[1]}px;
   margin-bottom: ${({ dimensions, os, theme }) =>
     dimensions >= 500 && os === "ios" ? theme.spacing[2] : 0}px;
-`;
-
-export const Title = styled.Text`
-  font-size: ${({ theme }) => theme.typography.size.xl};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  width: 100%;
+  flex: 1;
 `;
 
 export const Fields = styled.View`
@@ -33,11 +26,11 @@ export const Fields = styled.View`
   width: 100%;
 `;
 
-export const FieldWrap = styled.View`
+export const InputWrap = styled.View`
   position: relative;
 `;
 
-export const FieldControl = styled.TouchableOpacity`
+export const InputControl = styled.TouchableOpacity`
   position: absolute;
   right: ${({ theme }) => theme.spacing[1]}px;
   top: ${({ os }) => (os === "ios" ? 23 : 21)}px;
@@ -47,19 +40,4 @@ export const FieldControl = styled.TouchableOpacity`
 
 export const ControlText = styled.Text`
   color: ${({ theme }) => theme.colors.text.primary};
-`;
-
-export const AvatarWrap = styled.View`
-  position: absolute;
-  top: -70px;
-  width: 140px;
-  height: 140px;
-  background-color: ${({ theme }) => theme.colors.fill};
-  border-radius: ${({ theme }) => theme.shape.borderRadius.s}px;
-`;
-
-export const Icon = styled(AddIcon)`
-  position: absolute;
-  top: 100px;
-  left: 125px;
 `;

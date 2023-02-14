@@ -11,7 +11,11 @@ export const Background = styled.ImageBackground`
   flex: 1;
 `;
 
-export const Avatar = styled.Image`
-  width: 100%;
-  height: 100%;
+export const Content = styled.SafeAreaView`
+  flex: 1;
+`;
+
+export const Title = styled.Text`
+  font-size: ${({ theme }) => theme.typography.size.xl};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 `;

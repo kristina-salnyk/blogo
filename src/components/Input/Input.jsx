@@ -1,11 +1,11 @@
 import { useTheme } from "styled-components/native";
-import { Field as FieldStyled } from "./Field.styled";
+import { Input as InputStyled } from "./Input.styled";
 
-const Field = (props) => {
+const Input = (props) => {
   const theme = useTheme();
 
   return (
-    <FieldStyled
+    <InputStyled
       mode="outlined"
       outlineColor={theme.colors.outline}
       activeOutlineColor={theme.colors.main}
@@ -15,4 +15,4 @@ const Field = (props) => {
   );
 };
 
-export default Field;
+export default Input;

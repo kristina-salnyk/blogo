@@ -1,15 +1,11 @@
-import { useEffect, useState } from "react";
-import { Dimensions, FlatList, Platform } from "react-native";
+import { useState } from "react";
+import { ScrollView, View } from "react-native";
 import Post from "../components/Post/Post";
-import { PostsContent } from "../components/PostsList/PostsList.styled";
-import {
-  Avatar,
-  Background,
-  Container,
-} from "../components/Container/Container.styled";
-import bgImg from "../../assets/img/background.jpg";
-import { Profile } from "../components/Profile/Profile.styled";
-import { AvatarWrap, Icon } from "../components/Form/Form.styled";
+import Avatar from "../components/Avatar/Avatar";
+import Container from "../components/Container/Container";
+import LogoutIcon from "../components/icons/LogoutIcon";
+import { Content, Title } from "../components/Container/Container.styled";
+import { LogoutControl, Profile } from "../components/Profile/Profile.styled";
 
 const userImg = require("../../assets/img/default-user.png");
 const postImg = require("../../assets/img/post.jpg");
@@ -53,45 +49,25 @@ const initPosts = [
 const ProfileScreen = ({ navigation }) => {
   const [posts, setPosts] = useState(initPosts);
 
-  const [dimensions, setDimensions] = useState(Dimensions.get("window").width);
-
-  useEffect(() => {
-    const onChange = () => {
-      const width = Dimensions.get("window").width;
-      setDimensions(width);
-    };
-
-    Dimensions.addEventListener("change", onChange);
-    // return () => {
-    //   Dimensions.removeEventListener("change", onChange);
-    // };
-  }, []);
-
   return (
     <Container>
-      <Background source={bgImg}>
-        <Profile
-          style={{
-            paddingTop: 86,
-          }}
-          os={Platform.OS}
-          dimensions={dimensions}
-          behavior={Platform.OS === "ios" ? "padding" : null}
-        >
-          <PostsContent>
-            <FlatList
-              data={posts}
-              renderItem={({ item }) => <Post {...item} />}
-              keyExtractor={(item) => item.id}
-            >
-              <AvatarWrap>
-                <Avatar source={userImg} />
-                <Icon />
-              </AvatarWrap>
-            </FlatList>
-          </PostsContent>
-        </Profile>
-      </Background>
+      <Content>
+        <ScrollView>
+          <View style={{ paddingVertical: 70 }} />
+          <Profile>
+            <LogoutControl onPress={() => {}}>
+              <LogoutIcon />
+            </LogoutControl>
+            <Avatar />
+            <Title>Natali Romanova</Title>
+            <View>
+              {posts.map((item) => (
+                <Post key={item.id} {...item} />
+              ))}
+            </View>
+          </Profile>
+        </ScrollView>
+      </Content>
     </Container>
   );
 };

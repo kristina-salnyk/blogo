@@ -1,50 +1,26 @@
-import { View } from "react-native";
 import CommentsIcon from "../icons/CommentsIcon";
 import LocationIcon from "../icons/LocationIcon";
 import LikeIcon from "../icons/LikeIcon";
 import {
-  Header,
   ImageWrap,
-  PostContent,
-  SubTitle,
-  Title,
   Image,
-  AvatarWrap,
+  Container,
   Text,
-  Footer,
+  PostFooter,
   Group,
   Label,
   Link,
 } from "./Post.styled";
-import { Avatar } from "../Container/Container.styled";
 
-const Post = ({
-  id,
-  name,
-  email,
-  avatar,
-  image,
-  text,
-  comments,
-  likes,
-  location,
-}) => {
+const Post = ({ header, image, text, comments, likes, location }) => {
   return (
-    <PostContent>
-      <Header>
-        <AvatarWrap>
-          <Avatar source={avatar} />
-        </AvatarWrap>
-        <View>
-          <Title>{name}</Title>
-          <SubTitle>{email}</SubTitle>
-        </View>
-      </Header>
+    <Container>
+      {header}
       <ImageWrap>
         <Image source={image} />
       </ImageWrap>
       <Text>{text}</Text>
-      <Footer>
+      <PostFooter>
         <Group>
           <Group>
             <CommentsIcon />
@@ -59,8 +35,8 @@ const Post = ({
           <LocationIcon />
           <Link>{location}</Link>
         </Group>
-      </Footer>
-    </PostContent>
+      </PostFooter>
+    </Container>
   );
 };
 
