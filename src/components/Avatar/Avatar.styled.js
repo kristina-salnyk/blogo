@@ -11,7 +11,7 @@ export const ImageWrap = styled.View`
   border-radius: ${({ theme }) => theme.shape.borderRadius.s}px;
 `;
 
-export const AddImageIcon = styled(AddIcon)`
+export const AddIconStyled = styled(AddIcon)`
   position: absolute;
   top: 100px;
   left: 125px;

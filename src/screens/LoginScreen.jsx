@@ -10,7 +10,7 @@ import Input from "../components/Input/Input";
 import Button from "../components/Button/Button";
 import Link from "../components/Link/Link";
 import Container from "../components/Container/Container";
-import { Title } from "../components/Container/Container.styled";
+import { ContentTitle } from "../components/Container/Container.styled";
 import {
   FormContent,
   Form,
@@ -18,7 +18,7 @@ import {
   InputWrap,
   InputControl,
   ControlText,
-} from "../components/Form/Form.styled";
+} from "../components/AuthForm/AuthForm.styled";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -61,7 +61,7 @@ const LoginScreen = ({ navigation }) => {
               alignItems: "center",
             }}
           >
-            <Title>Login</Title>
+            <ContentTitle>Login</ContentTitle>
             <Fields>
               <Input
                 value={email}

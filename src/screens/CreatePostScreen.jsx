@@ -1,6 +1,10 @@
-import { Text } from "react-native";
 import { useEffect } from "react";
 import { useRoute } from "../contexts/Route";
+import {
+  Container,
+  ContentWrap,
+} from "../components/Container/Container.styled";
+import PostForm from "../components/PostForm/PostForm";
 
 const CreatePostScreen = ({ navigation }) => {
   const { setCurrentRouteName } = useRoute();
@@ -11,7 +15,13 @@ const CreatePostScreen = ({ navigation }) => {
     };
   }, []);
 
-  return <Text>Create posts screen</Text>;
+  return (
+    <Container>
+      <ContentWrap>
+        <PostForm />
+      </ContentWrap>
+    </Container>
+  );
 };
 
 export default CreatePostScreen;

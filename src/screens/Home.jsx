@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "styled-components/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useRoute } from "../contexts/Route";
 import PostsScreen from "./PostsScreen";
 import ProfileScreen from "./ProfileScreen";
 import CreatePostScreen from "./CreatePostScreen";
@@ -8,13 +10,11 @@ import PostsIcon from "../components/icons/PostsIcon";
 import CreatePostsIcon from "../components/icons/CreatePostsIcon";
 import ProfileIcon from "../components/icons/ProfileIcon";
 import LogoutIcon from "../components/icons/LogoutIcon";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useRoute } from "../contexts/Route";
 
 const HomeTabs = createBottomTabNavigator();
 const PostStack = createNativeStackNavigator();
 
-const Home = ({ navigation, route }) => {
+const Home = ({ navigation }) => {
   const theme = useTheme();
   const { currentRouteName, setCurrentRouteName } = useRoute();
 

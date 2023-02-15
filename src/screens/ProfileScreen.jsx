@@ -4,7 +4,10 @@ import Post from "../components/Post/Post";
 import Avatar from "../components/Avatar/Avatar";
 import Container from "../components/Container/Container";
 import LogoutIcon from "../components/icons/LogoutIcon";
-import { Content, Title } from "../components/Container/Container.styled";
+import {
+  ContentWrap,
+  ContentTitle,
+} from "../components/Container/Container.styled";
 import { LogoutControl, Profile } from "../components/Profile/Profile.styled";
 
 const userImg = require("../../assets/img/default-user.png");
@@ -51,7 +54,7 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <Container>
-      <Content>
+      <ContentWrap>
         <ScrollView>
           <View style={{ paddingVertical: 70 }} />
           <Profile>
@@ -59,7 +62,7 @@ const ProfileScreen = ({ navigation }) => {
               <LogoutIcon />
             </LogoutControl>
             <Avatar />
-            <Title>Natali Romanova</Title>
+            <ContentTitle>Natali Romanova</ContentTitle>
             <View>
               {posts.map((item) => (
                 <Post key={item.id} {...item} />
@@ -67,7 +70,7 @@ const ProfileScreen = ({ navigation }) => {
             </View>
           </Profile>
         </ScrollView>
-      </Content>
+      </ContentWrap>
     </Container>
   );
 };

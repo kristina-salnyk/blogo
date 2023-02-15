@@ -1,13 +1,7 @@
 import { View } from "react-native";
-import {
-  Container,
-  ImageWrap,
-  Image,
-  SubTitle,
-  Title,
-} from "./PostHeader.styled";
+import { Container, ImageWrap, Image, SubTitle, Title } from "./Author.styled";
 
-const PostHeader = ({ avatar, name, email }) => {
+const Author = ({ avatar, name, email }) => {
   return (
     <Container>
       <ImageWrap>
@@ -21,4 +15,4 @@ const PostHeader = ({ avatar, name, email }) => {
   );
 };
 
-export default PostHeader;
+export default Author;

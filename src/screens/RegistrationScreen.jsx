@@ -10,7 +10,7 @@ import Button from "../components/Button/Button";
 import Link from "../components/Link/Link";
 import Container from "../components/Container/Container";
 import Avatar from "../components/Avatar/Avatar";
-import { Title } from "../components/Container/Container.styled";
+import { ContentTitle } from "../components/Container/Container.styled";
 import {
   FormContent,
   Form,
@@ -18,7 +18,8 @@ import {
   InputWrap,
   InputControl,
   ControlText,
-} from "../components/Form/Form.styled";
+} from "../components/AuthForm/AuthForm.styled";
+import { useDimensions } from "../contexts/Dimensions";
 
 const RegistrationScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -26,16 +27,7 @@ const RegistrationScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [isHidden, setIsHidden] = useState(true);
 
-  const [dimensions, setDimensions] = useState(Dimensions.get("window").width);
-
-  useEffect(() => {
-    const onChange = () => {
-      const width = Dimensions.get("window").width;
-      setDimensions(width);
-    };
-
-    Dimensions.addEventListener("change", onChange);
-  }, []);
+  const { dimensions } = useDimensions();
 
   const onRegister = () => {
     const data = { name, email, password };
@@ -62,7 +54,7 @@ const RegistrationScreen = ({ navigation }) => {
               alignItems: "center",
             }}
           >
-            <Title>Registration</Title>
+            <ContentTitle>Registration</ContentTitle>
             <Fields>
               <Input
                 value={name}

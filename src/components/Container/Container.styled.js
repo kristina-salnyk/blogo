@@ -11,11 +11,12 @@ export const Background = styled.ImageBackground`
   flex: 1;
 `;
 
-export const Content = styled.SafeAreaView`
+export const ContentWrap = styled.SafeAreaView`
+  align-items: center;
   flex: 1;
 `;
 
-export const Title = styled.Text`
+export const ContentTitle = styled.Text`
   font-size: ${({ theme }) => theme.typography.size.xl};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 `;

@@ -9,6 +9,7 @@ const Input = (props) => {
       mode="outlined"
       outlineColor={theme.colors.outline}
       activeOutlineColor={theme.colors.main}
+      activeUnderlineColor={theme.colors.main}
       placeholderTextColor={theme.colors.text.placeholder}
       {...props}
     />

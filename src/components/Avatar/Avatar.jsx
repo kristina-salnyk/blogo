@@ -1,11 +1,11 @@
 import userImg from "../../../assets/img/default-user.png";
-import { ImageWrap, Image, AddImageIcon } from "./Avatar.styled";
+import { ImageWrap, Image, AddIconStyled } from "./Avatar.styled";
 
 const Avatar = () => {
   return (
     <ImageWrap>
       <Image source={userImg} />
-      <AddImageIcon />
+      <AddIconStyled />
     </ImageWrap>
   );
 };
