@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { FlatList } from "react-native";
-import Post from "../components/Post/Post";
-import Author from "../components/Author/Author";
-import {
-  Container,
-  ContentWrap,
-} from "../components/Container/Container.styled";
-import { Posts } from "../components/Posts/Posts.styled";
+import Post from "../../components/Post/Post";
+import Author from "../../components/Author/Author";
+import Container from "../../components/Container/Container";
+import { ScreenContainer } from "../../components/Container/Container.styled";
+import { useDimensions } from "../../contexts/Dimensions";
+import { PostsContentWrap } from "../../components/Posts/Posts.styled";
 
-const userImg = require("../../assets/img/default-user.png");
-const postImg = require("../../assets/img/post.jpg");
+const userImg = require("../../../assets/img/default-user.png");
+const postImg = require("../../../assets/img/post.jpg");
 
 const initPosts = [
   {
@@ -50,10 +49,12 @@ const initPosts = [
 const PostsScreen = ({ navigation }) => {
   const [posts, setPosts] = useState(initPosts);
 
+  const { dimensions } = useDimensions();
+
   return (
     <Container>
-      <ContentWrap>
-        <Posts>
+      <ScreenContainer>
+        <PostsContentWrap dimensions={dimensions}>
           <FlatList
             data={posts}
             renderItem={({ item }) => (
@@ -61,8 +62,8 @@ const PostsScreen = ({ navigation }) => {
             )}
             keyExtractor={(item) => item.id}
           />
-        </Posts>
-      </ContentWrap>
+        </PostsContentWrap>
+      </ScreenContainer>
     </Container>
   );
 };
