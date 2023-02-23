@@ -1,10 +1,14 @@
 import { useEffect } from "react";
 import { useRoute } from "../../contexts/Route";
 import PostForm from "../../components/PostForm/PostForm";
-import { Keyboard, TouchableWithoutFeedback } from "react-native";
+import {
+  Keyboard,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native";
 import Container from "../../components/Container/Container";
 import DeletePostsIcon from "../../components/icons/DeletePostsIcon";
-import { ControlPanel, PostControl } from "./CreatePostScreen.styled";
+import { ControlPanel } from "./CreatePostScreen.styled";
 
 const CreatePostScreen = ({ navigation }) => {
   const { setCurrentRouteName } = useRoute();
@@ -20,9 +24,9 @@ const CreatePostScreen = ({ navigation }) => {
       <Container>
         <PostForm />
         <ControlPanel>
-          <PostControl onPress={() => {}}>
+          <TouchableOpacity onPress={() => {}}>
             <DeletePostsIcon />
-          </PostControl>
+          </TouchableOpacity>
         </ControlPanel>
       </Container>
     </TouchableWithoutFeedback>
