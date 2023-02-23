@@ -1,13 +1,7 @@
-import { Container as ContainerStyled, Background } from "./Container.styled";
-
-const bgImg = require("../../../assets/img/background.jpg");
+import { Container as ContainerStyled } from "./Container.styled";
 
 const Container = ({ children }) => {
-  return (
-    <ContainerStyled>
-      <Background source={bgImg}>{children}</Background>
-    </ContainerStyled>
-  );
+  return <ContainerStyled>{children}</ContainerStyled>;
 };
 
 export default Container;

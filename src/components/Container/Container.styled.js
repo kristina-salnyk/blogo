@@ -11,7 +11,7 @@ export const Background = styled.ImageBackground`
   flex: 1;
 `;
 
-export const ContentWrap = styled.SafeAreaView`
+export const ScreenContainer = styled.SafeAreaView`
   align-items: center;
   flex: 1;
 `;
