@@ -1,24 +1,19 @@
-import { useState, useEffect } from "react";
-import {
-  Platform,
-  Keyboard,
-  TouchableWithoutFeedback,
-  Dimensions,
-} from "react-native";
+import { useState } from "react";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import { useTheme } from "styled-components/native";
-import Input from "../components/Input/Input";
-import Button from "../components/Button/Button";
-import Link from "../components/Link/Link";
-import Container from "../components/Container/Container";
-import { ContentTitle } from "../components/Container/Container.styled";
+import Input from "../../components/Input/Input";
+import Button from "../../components/Button/Button";
+import Link from "../../components/Link/Link";
+import { ContentTitle } from "../../components/Container/Container.styled";
 import {
-  FormContent,
-  Form,
-  Fields,
-  InputWrap,
-  InputControl,
   ControlText,
-} from "../components/AuthForm/AuthForm.styled";
+  Fields,
+  InputControl,
+  InputWrap,
+} from "../../components/AuthForm/AuthForm.styled";
+import BackgroundContainer from "../../components/Container/BackgroundContainer";
+import AuthForm from "../../components/AuthForm/AuthForm";
+import AuthFormContent from "../../components/AuthForm/AuthFormContent";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -27,17 +22,6 @@ const LoginScreen = ({ navigation }) => {
 
   const theme = useTheme();
 
-  const [dimensions, setDimensions] = useState(Dimensions.get("window").width);
-
-  useEffect(() => {
-    const onChange = () => {
-      const width = Dimensions.get("window").width;
-      setDimensions(width);
-    };
-
-    Dimensions.addEventListener("change", onChange);
-  }, []);
-
   const onLogin = () => {
     const data = { email, password };
     console.log(data);
@@ -45,22 +29,13 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Container>
-        <Form
+      <BackgroundContainer>
+        <AuthForm
           style={{
             paddingTop: theme.spacing[2],
           }}
-          os={Platform.OS}
-          dimensions={dimensions}
-          behavior={Platform.OS === "ios" ? "padding" : null}
         >
-          <FormContent
-            dimensions={dimensions}
-            os={Platform.OS}
-            contentContainerStyle={{
-              alignItems: "center",
-            }}
-          >
+          <AuthFormContent>
             <ContentTitle>Login</ContentTitle>
             <Fields>
               <Input
@@ -76,7 +51,6 @@ const LoginScreen = ({ navigation }) => {
                   secureTextEntry={isHidden}
                 />
                 <InputControl
-                  os={Platform.OS}
                   onPress={() => setIsHidden((prevState) => !prevState)}
                 >
                   <ControlText>{isHidden ? "Show" : "Hide"}</ControlText>
@@ -88,9 +62,9 @@ const LoginScreen = ({ navigation }) => {
               text="Don't have an account? Register"
               onPress={() => navigation.navigate("Registration")}
             />
-          </FormContent>
-        </Form>
-      </Container>
+          </AuthFormContent>
+        </AuthForm>
+      </BackgroundContainer>
     </TouchableWithoutFeedback>
   );
 };
