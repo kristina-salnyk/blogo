@@ -1,21 +1,25 @@
 import styled from "styled-components/native";
+import { Platform } from "react-native";
 
-export const Form = styled.KeyboardAvoidingView`
-  position: relative;
+export const FormContainer = styled.KeyboardAvoidingView`
+  margin: 0
+    ${({ dimensions, theme }) => (dimensions >= 500 ? theme.spacing[3] : 0)}px;
+
   background-color: ${({ theme }) => theme.colors.white};
   border-top-left-radius: ${({ theme }) => theme.shape.borderRadius.m}px;
   border-top-right-radius: ${({ theme }) => theme.shape.borderRadius.m}px;
+
+  position: relative;
   align-items: center;
+
   flex: ${({ dimensions, style }) =>
     dimensions >= 500 ? 0.8 : style?.flex ? style.flex : 0.6};
-  margin: 0
-    ${({ dimensions, theme }) => (dimensions >= 500 ? theme.spacing[3] : 0)}px;
 `;
 
 export const FormContent = styled.ScrollView`
   padding: 0 ${({ theme }) => theme.spacing[1]}px;
-  margin-bottom: ${({ dimensions, os, theme }) =>
-    dimensions >= 500 && os === "ios" ? theme.spacing[2] : 0}px;
+  margin-bottom: ${({ dimensions, theme }) =>
+    dimensions >= 500 && Platform.OS === "ios" ? theme.spacing[2] : 0}px;
   width: 100%;
   flex: 1;
 `;
@@ -33,7 +37,8 @@ export const InputWrap = styled.View`
 export const InputControl = styled.TouchableOpacity`
   position: absolute;
   right: ${({ theme }) => theme.spacing[1]}px;
-  top: ${({ os }) => (os === "ios" ? 23 : 21)}px;
+  top: ${() => (Platform.OS === "ios" ? 23 : 21)}px;
+
   justify-content: center;
   z-index: 1;
 `;
