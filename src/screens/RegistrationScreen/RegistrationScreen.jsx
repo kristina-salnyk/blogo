@@ -1,25 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
+import Input from "../../components/Input/Input";
+import Button from "../../components/Button/Button";
+import Link from "../../components/Link/Link";
+import Avatar from "../../components/Avatar/Avatar";
+import { ContentTitle } from "../../components/Container/Container.styled";
 import {
-  Platform,
-  Keyboard,
-  TouchableWithoutFeedback,
-  Dimensions,
-} from "react-native";
-import Input from "../components/Input/Input";
-import Button from "../components/Button/Button";
-import Link from "../components/Link/Link";
-import Container from "../components/Container/Container";
-import Avatar from "../components/Avatar/Avatar";
-import { ContentTitle } from "../components/Container/Container.styled";
-import {
-  FormContent,
-  Form,
-  Fields,
-  InputWrap,
-  InputControl,
   ControlText,
-} from "../components/AuthForm/AuthForm.styled";
-import { useDimensions } from "../contexts/Dimensions";
+  Fields,
+  InputControl,
+  InputWrap,
+} from "../../components/AuthForm/AuthForm.styled";
+import AuthForm from "../../components/AuthForm/AuthForm";
+import BackgroundContainer from "../../components/Container/BackgroundContainer";
+import AuthFormContent from "../../components/AuthForm/AuthFormContent";
+import { useTheme } from "styled-components/native";
 
 const RegistrationScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -27,7 +22,7 @@ const RegistrationScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [isHidden, setIsHidden] = useState(true);
 
-  const { dimensions } = useDimensions();
+  const theme = useTheme();
 
   const onRegister = () => {
     const data = { name, email, password };
@@ -36,24 +31,15 @@ const RegistrationScreen = ({ navigation }) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Container>
-        <Form
+      <BackgroundContainer>
+        <AuthForm
           style={{
-            paddingTop: 86,
+            paddingTop: theme.spacing[4],
             flex: 0.7,
           }}
-          os={Platform.OS}
-          dimensions={dimensions}
-          behavior={Platform.OS === "ios" ? "padding" : null}
         >
           <Avatar />
-          <FormContent
-            dimensions={dimensions}
-            os={Platform.OS}
-            contentContainerStyle={{
-              alignItems: "center",
-            }}
-          >
+          <AuthFormContent>
             <ContentTitle>Registration</ContentTitle>
             <Fields>
               <Input
@@ -74,7 +60,6 @@ const RegistrationScreen = ({ navigation }) => {
                   secureTextEntry={isHidden}
                 />
                 <InputControl
-                  os={Platform.OS}
                   onPress={() => setIsHidden((prevState) => !prevState)}
                 >
                   <ControlText>{isHidden ? "Show" : "Hide"}</ControlText>
@@ -86,9 +71,9 @@ const RegistrationScreen = ({ navigation }) => {
               text="Already have an account? Login"
               onPress={() => navigation.navigate("Login")}
             />
-          </FormContent>
-        </Form>
-      </Container>
+          </AuthFormContent>
+        </AuthForm>
+      </BackgroundContainer>
     </TouchableWithoutFeedback>
   );
 };
