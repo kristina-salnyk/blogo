@@ -14,7 +14,7 @@ const theme = {
       placeholder: "#BDBDBD",
     },
   },
-  spacing: [8, 16, 32, 64],
+  spacing: [8, 16, 32, 64, 86, 96],
   shape: {
     borderRadius: { xs: 8, s: 16, m: 25, l: 50 },
     borderWidth: 1,
