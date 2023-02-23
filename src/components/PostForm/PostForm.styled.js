@@ -1,9 +1,21 @@
 import styled from "styled-components/native";
+import { Platform } from "react-native";
 
-export const Form = styled.KeyboardAvoidingView`
+export const FormContainer = styled.KeyboardAvoidingView`
+  margin: 0
+    ${({ dimensions, theme }) => (dimensions >= 500 ? theme.spacing[3] : 0)}px;
+  background-color: ${({ theme }) => theme.colors.white};
+  align-items: center;
+  flex: 1;
+`;
+
+export const FormContent = styled.View`
   padding: ${({ theme }) => theme.spacing[2]}px
-    ${({ theme }) => theme.spacing[1]}px;
+    ${({ theme }) => theme.spacing[1]}px 0;
+  margin-bottom: ${({ dimensions, theme }) =>
+    dimensions >= 500 && Platform.OS === "ios" ? theme.spacing[2] : 0}px;
   width: ${({ dimensions }) => (dimensions >= 500 ? 50 : 100)}%;
+  flex: 1;
 `;
 
 export const ImageWrap = styled.View`
