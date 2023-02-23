@@ -13,12 +13,7 @@ import { useTheme } from "styled-components/native";
 import Input from "../Input/Input";
 import { InputWrap } from "../AuthForm/AuthForm.styled";
 import Button from "../Button/Button";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import LocationIcon from "../icons/LocationIcon";
 import AddImageIcon from "../icons/AddImageIcon";
 
@@ -92,7 +87,6 @@ const PostForm = () => {
                 console.log({ image, title, location });
               }}
             />
-            <TouchableOpacity></TouchableOpacity>
           </ScrollView>
         </KeyboardAvoidingView>
       </FormContent>
