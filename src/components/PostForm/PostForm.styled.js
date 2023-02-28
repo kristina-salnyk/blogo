@@ -20,12 +20,16 @@ export const FormContent = styled.View`
 
 export const ImageWrap = styled.View`
   position: relative;
+  border-radius: ${({ theme }) => theme.shape.borderRadius.xs}px;
+  overflow: hidden;
 `;
 
 export const Image = styled.Image`
-  border-radius: ${({ theme }) => theme.shape.borderRadius.xs}px;
-  max-height: 250px;
+  position: absolute;
   width: 100%;
+  height: 100%;
+  border: 2px solid red;
+  z-index: 1;
 `;
 
 export const AddImageIconWrap = styled.TouchableOpacity`
