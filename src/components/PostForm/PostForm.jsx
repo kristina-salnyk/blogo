@@ -3,6 +3,7 @@ import {
   AddImageIconWrap,
   FormContainer,
   FormContent,
+  ImageStyled,
   ImageWrap,
   InputLabel,
   Text,
@@ -12,19 +13,12 @@ import { useTheme } from "styled-components/native";
 import Input from "../Input/Input";
 import { InputWrap } from "../AuthForm/AuthForm.styled";
 import Button from "../Button/Button";
-import {
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  View,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import LocationIcon from "../icons/LocationIcon";
 import AddImageIcon from "../icons/AddImageIcon";
 import { Camera as MediaLibrary, Camera } from "expo-camera";
 
-const postImg = require("../../../assets/img/post.jpg");
-const defaultPostImg = require("../../../assets/img/default-post.png");
+const defaultPostImgPath = "../../../assets/img/default-post.png";
 
 const PostForm = () => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -47,10 +41,11 @@ const PostForm = () => {
   }, []);
 
   useEffect(() => {
-    setPhotoURI(hasPermission ? "" : defaultPostImg);
+    setPhotoURI(hasPermission ? "" : defaultPostImgPath);
   }, [hasPermission]);
 
   const takePhoto = async () => {
+    if (!camera) return;
     const photo = await camera.takePictureAsync();
     setPhotoURI(photo.uri);
   };
@@ -58,6 +53,14 @@ const PostForm = () => {
   const retakePhoto = async () => {
     setPhotoURI(null);
   };
+
+  if (hasPermission === null) {
+    return <View />;
+  }
+
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
 
   return (
     <FormContainer
@@ -79,17 +82,18 @@ const PostForm = () => {
               <>
                 <View>
                   {photoURI ? (
-                    <Image
-                      source={{ uri: photoURI }}
-                      style={{ width: "100%", height: 250 }}
-                    />
+                    <ImageStyled source={{ uri: photoURI }} />
                   ) : (
                     <Camera
-                      ref={setCamera}
+                      ref={(ref) => {
+                        setCamera(ref);
+                      }}
+                      type={type}
                       style={{
-                        height: 250,
+                        height: Platform.OS === "ios" ? 250 : 350,
                         width: "100%",
                       }}
+                      ratio="1:1"
                     ></Camera>
                   )}
                 </View>
