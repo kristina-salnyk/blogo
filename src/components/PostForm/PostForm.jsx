@@ -3,6 +3,7 @@ import {
   AddImageIconWrap,
   FormContainer,
   FormContent,
+  ImageContainer,
   ImageStyled,
   ImageWrap,
   InputLabel,
@@ -17,16 +18,18 @@ import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import LocationIcon from "../icons/LocationIcon";
 import AddImageIcon from "../icons/AddImageIcon";
 import { Camera as MediaLibrary, Camera } from "expo-camera";
+import * as Location from "expo-location";
 
 const defaultPostImgPath = "../../../assets/img/default-post.png";
 
-const PostForm = () => {
+const PostForm = ({ onSubmit }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [camera, setCamera] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
-  const [photoURI, setPhotoURI] = useState("");
+  const [image, setImage] = useState("");
   const [title, setTitle] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState(null);
+  const [locationString, setLocationString] = useState("");
 
   const { dimensions } = useDimensions();
   const theme = useTheme();
@@ -41,17 +44,45 @@ const PostForm = () => {
   }, []);
 
   useEffect(() => {
-    setPhotoURI(hasPermission ? "" : defaultPostImgPath);
+    setImage(hasPermission ? "" : defaultPostImgPath);
   }, [hasPermission]);
 
-  const takePhoto = async () => {
+  useEffect(() => {
+    if (!location) return;
+
+    (async () => {
+      const [result] = await Location.reverseGeocodeAsync(location);
+      if (!result) return;
+      setLocationString(
+        `${result["city"] ?? result["region"]}, ${result["country"]}`
+      );
+    })();
+  }, [location]);
+
+  const handleTakePhoto = async () => {
     if (!camera) return;
     const photo = await camera.takePictureAsync();
-    setPhotoURI(photo.uri);
+    setImage(photo.uri);
+
+    let { status } = await Location.getForegroundPermissionsAsync();
+    if (status !== "granted") {
+      console.log("Permission to access location was denied");
+    }
+
+    const position = await Location.getCurrentPositionAsync();
+    const coords = {
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
+    };
+    setLocation(coords);
   };
 
-  const retakePhoto = async () => {
-    setPhotoURI(null);
+  const handleRetakePhoto = async () => {
+    setImage(null);
+  };
+
+  const handleSubmit = () => {
+    onSubmit({ post: { image, title, location, locationString } });
   };
 
   if (hasPermission === null) {
@@ -80,9 +111,9 @@ const PostForm = () => {
           <ScrollView style={{ flex: 1 }}>
             <ImageWrap>
               <>
-                <View>
-                  {photoURI ? (
-                    <ImageStyled source={{ uri: photoURI }} />
+                <ImageContainer>
+                  {image ? (
+                    <ImageStyled source={{ uri: image }} />
                   ) : (
                     <Camera
                       ref={(ref) => {
@@ -96,11 +127,13 @@ const PostForm = () => {
                       ratio="1:1"
                     ></Camera>
                   )}
-                </View>
-                <AddImageIconWrap onPress={photoURI ? retakePhoto : takePhoto}>
+                </ImageContainer>
+                <AddImageIconWrap
+                  onPress={image ? handleRetakePhoto : handleTakePhoto}
+                >
                   <AddImageIcon
-                    opacity={photoURI ? 0.3 : 1}
-                    fill={photoURI ? theme.colors.white : theme.colors.border}
+                    opacity={image ? 0.3 : 1}
+                    fill={image ? theme.colors.white : theme.colors.border}
                   />
                 </AddImageIconWrap>
               </>
@@ -117,9 +150,10 @@ const PostForm = () => {
             <InputWrap>
               <Input
                 mode="flat"
-                value={location}
+                value={locationString}
                 placeholder="Location"
                 onChangeText={(text) => setLocation(text)}
+                diabled={true}
                 style={{
                   backgroundColor: theme.colors.white,
                   paddingLeft: theme.spacing[2],
@@ -129,12 +163,7 @@ const PostForm = () => {
                 <LocationIcon />
               </InputLabel>
             </InputWrap>
-            <Button
-              text="Publish"
-              onPress={() => {
-                console.log({ photoURI, title, location });
-              }}
-            />
+            <Button text="Publish" onPress={handleSubmit} />
           </ScrollView>
         </KeyboardAvoidingView>
       </FormContent>

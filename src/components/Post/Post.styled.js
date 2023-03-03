@@ -12,6 +12,7 @@ export const ImageWrap = styled.View`
 export const Image = styled.Image`
   width: 100%;
   border-radius: ${({ theme }) => theme.shape.borderRadius.xs}px;
+  height: 250px;
 `;
 
 export const Text = styled.Text`

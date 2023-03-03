@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { FlatList } from "react-native";
+import { useEffect, useState } from "react";
+import { FlatList, Image } from "react-native";
 import Post from "../../components/Post/Post";
 import Author from "../../components/Author/Author";
 import Container from "../../components/Container/Container";
@@ -16,40 +16,62 @@ const initPosts = [
     name: "Natali Romanova",
     email: "email@example.com",
     avatar: userImg,
-    image: postImg,
-    text: "Forest",
+    image: Image.resolveAssetSource(postImg).uri,
+    title: "Forest",
     comments: 124,
     likes: 1140,
-    location: "Ivano-Frankivs'k Region, Ukraine",
+    locationString: "Ivano-Frankivs'k Region, Ukraine",
   },
   {
     id: 2,
     name: "Ivan Savchenko",
     email: "ivan@example.com",
     avatar: userImg,
-    image: postImg,
-    text: "Rest",
+    image: Image.resolveAssetSource(postImg).uri,
+    title: "Rest",
     comments: 13,
     likes: 2,
-    location: "Ukraine",
+    locationString: "Ukraine",
   },
   {
     id: 3,
     name: "Natalia Salnyk",
     email: "nata@example.com",
     avatar: userImg,
-    image: postImg,
-    text: "My favorite photo",
+    image: Image.resolveAssetSource(postImg).uri,
+    title: "My favorite photo",
     comments: 1,
     likes: 0,
-    location: "Sumy",
+    locationString: "Sumy",
   },
 ];
 
-const PostsScreen = ({ navigation }) => {
+const PostsScreen = ({ navigation, route }) => {
   const [posts, setPosts] = useState(initPosts);
 
   const { dimensions } = useDimensions();
+
+  useEffect(() => {
+    const data = route.params?.post;
+    if (!data) return;
+
+    setPosts((prevState) => {
+      return [
+        {
+          id: 4,
+          name: "Natalia Salnyk",
+          email: "nata@example.com",
+          avatar: userImg,
+          comments: 1,
+          likes: 0,
+          ...data,
+        },
+        ...prevState,
+      ];
+    });
+
+    return () => {};
+  }, [route.params]);
 
   return (
     <Container>

@@ -26,6 +26,10 @@ export const ImageWrap = styled.View`
 
 export const ImageStyled = styled.Image`
   height: 250px;
+`;
+
+export const ImageContainer = styled.View`
+  height: 250px;
   justify-content: center;
 `;
 

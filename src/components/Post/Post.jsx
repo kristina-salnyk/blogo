@@ -2,24 +2,32 @@ import CommentsIcon from "../icons/CommentsIcon";
 import LocationIcon from "../icons/LocationIcon";
 import LikeIcon from "../icons/LikeIcon";
 import {
-  ImageWrap,
-  Image,
   Container,
-  Text,
-  PostFooter,
   Group,
+  Image,
+  ImageWrap,
   Label,
   Link,
+  PostFooter,
+  Text,
 } from "./Post.styled";
 
-const Post = ({ header, image, text, comments, likes, location }) => {
+const Post = ({
+  header,
+  image,
+  title,
+  comments,
+  likes,
+  location,
+  locationString,
+}) => {
   return (
     <Container>
       {header}
       <ImageWrap>
-        <Image source={image} />
+        <Image source={{ uri: image }} />
       </ImageWrap>
-      <Text>{text}</Text>
+      <Text>{title}</Text>
       <PostFooter>
         <Group>
           <Group>
@@ -33,7 +41,7 @@ const Post = ({ header, image, text, comments, likes, location }) => {
         </Group>
         <Group>
           <LocationIcon />
-          <Link>{location}</Link>
+          <Link>{locationString}</Link>
         </Group>
       </PostFooter>
     </Container>

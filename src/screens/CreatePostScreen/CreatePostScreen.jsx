@@ -19,12 +19,20 @@ const CreatePostScreen = ({ navigation }) => {
     };
   }, []);
 
+  const handlePublishPost = (data) => {
+    navigation.navigate("Publications", data);
+  };
+
+  const handleDeletePost = () => {
+    navigation.navigate("Publications");
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
-        <PostForm />
+        <PostForm onSubmit={handlePublishPost} />
         <ControlPanel>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={handleDeletePost}>
             <DeletePostsIcon />
           </TouchableOpacity>
         </ControlPanel>
