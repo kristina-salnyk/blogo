@@ -12,6 +12,17 @@ const postImg = require("../../../assets/img/post.jpg");
 
 const initPosts = [
   {
+    id: 0,
+    name: "Maksim",
+    email: "maksim@example.com",
+    avatar: userImg,
+    image: Image.resolveAssetSource(postImg).uri,
+    title: "My cake is on the keyboard",
+    comments: 1,
+    likes: 0,
+    locationString: "Kyiv",
+  },
+  {
     id: 1,
     name: "Natali Romanova",
     email: "email@example.com",
