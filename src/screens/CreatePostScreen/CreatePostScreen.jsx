@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useRoute } from "../../contexts/Route";
+import {useEffect} from "react";
+import {useRoute} from "../../contexts/Route";
 import PostForm from "../../components/PostForm/PostForm";
 import {
   Keyboard,
@@ -8,12 +8,14 @@ import {
 } from "react-native";
 import Container from "../../components/Container/Container";
 import DeletePostsIcon from "../../components/icons/DeletePostsIcon";
-import { ControlPanel } from "./CreatePostScreen.styled";
+import {ControlPanel} from "./CreatePostScreen.styled";
 
-const CreatePostScreen = ({ navigation }) => {
-  const { setCurrentRouteName } = useRoute();
+const CreatePostScreen = ({navigation}) => {
+  const {setCurrentRouteName} = useRoute();
 
   useEffect(() => {
+    setCurrentRouteName("Create publication");
+
     return () => {
       setCurrentRouteName("");
     };
@@ -28,16 +30,16 @@ const CreatePostScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Container>
-        <PostForm onSubmit={handlePublishPost} />
-        <ControlPanel>
-          <TouchableOpacity onPress={handleDeletePost}>
-            <DeletePostsIcon />
-          </TouchableOpacity>
-        </ControlPanel>
-      </Container>
-    </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Container>
+          <PostForm onSubmit={handlePublishPost}/>
+          <ControlPanel>
+            <TouchableOpacity onPress={handleDeletePost}>
+              <DeletePostsIcon/>
+            </TouchableOpacity>
+          </ControlPanel>
+        </Container>
+      </TouchableWithoutFeedback>
   );
 };
 

@@ -6,6 +6,7 @@ import Container from "../../components/Container/Container";
 import { ScreenContainer } from "../../components/Container/Container.styled";
 import { useDimensions } from "../../contexts/Dimensions";
 import { PostsContentWrap } from "../../components/Posts/Posts.styled";
+import { useRoute } from "../../contexts/Route";
 
 const userImg = require("../../../assets/img/default-user.png");
 const postImg = require("../../../assets/img/post.jpg");
@@ -62,6 +63,8 @@ const PostsScreen = ({ navigation, route }) => {
 
   const { dimensions } = useDimensions();
 
+  const { setCurrentRouteName } = useRoute();
+
   useEffect(() => {
     const data = route.params?.post;
     if (!data) return;
@@ -84,6 +87,15 @@ const PostsScreen = ({ navigation, route }) => {
     return () => {};
   }, [route.params]);
 
+  const handleOpenMap = (location, locationString) => {
+    if (!location) return;
+
+    navigation.navigate("Posts", {
+      screen: "Map",
+      params: { location, locationString },
+    });
+  };
+
   return (
     <Container>
       <ScreenContainer>
@@ -91,7 +103,11 @@ const PostsScreen = ({ navigation, route }) => {
           <FlatList
             data={posts}
             renderItem={({ item }) => (
-              <Post header={<Author {...item} />} {...item}></Post>
+              <Post
+                onOpenMap={handleOpenMap}
+                header={<Author {...item} />}
+                {...item}
+              ></Post>
             )}
             keyExtractor={(item) => item.id}
           />

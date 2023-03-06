@@ -34,6 +34,14 @@ export const Group = styled.View`
   max-width: 50%;
 `;
 
+export const ClickableGroup = styled.TouchableOpacity`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: ${({ theme }) => theme.spacing[1]}px;
+  max-width: 50%;
+`;
+
 export const Label = styled.Text`
   margin-left: ${({ theme }) => theme.spacing[0]}px;
   color: ${({ theme }) => theme.colors.text.placeholder};

@@ -10,6 +10,7 @@ import PostsIcon from "../components/icons/PostsIcon";
 import CreatePostsIcon from "../components/icons/CreatePostsIcon";
 import ProfileIcon from "../components/icons/ProfileIcon";
 import LogoutIcon from "../components/icons/LogoutIcon";
+import MapScreen from "../screens/MapScreen/MapScreen";
 
 const HomeTabs = createBottomTabNavigator();
 const PostStack = createNativeStackNavigator();
@@ -30,8 +31,9 @@ const Home = ({ navigation }) => {
         tabBarShowLabel: false,
         tabBarStyle: [
           {
-            display:
-              currentRouteName === "Create publication" ? "none" : "flex",
+            display: ["Create publication", "Map"].includes(currentRouteName)
+              ? "none"
+              : "flex",
           },
           null,
         ],
@@ -63,6 +65,10 @@ const Home = ({ navigation }) => {
               name="Create publication"
               component={CreatePostScreen}
             ></PostStack.Screen>
+            <PostStack.Screen
+              name="Map"
+              component={MapScreen}
+            ></PostStack.Screen>
           </PostStack.Navigator>
         )}
       </HomeTabs.Screen>
@@ -77,7 +83,6 @@ const Home = ({ navigation }) => {
         listeners={({ navigation }) => ({
           tabPress: (event) => {
             event.preventDefault();
-            setCurrentRouteName("Create publication");
             navigation.navigate("Posts", {
               screen: "Create publication",
             });
