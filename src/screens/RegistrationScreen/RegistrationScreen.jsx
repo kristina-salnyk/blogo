@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
+import { useTheme } from "styled-components/native";
+import { useDispatch } from "react-redux";
+import AuthForm from "../../components/AuthForm/AuthForm";
+import BackgroundContainer from "../../components/Container/BackgroundContainer";
+import AuthFormContent from "../../components/AuthForm/AuthFormContent";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import Link from "../../components/Link/Link";
@@ -11,10 +16,7 @@ import {
   InputControl,
   InputWrap,
 } from "../../components/AuthForm/AuthForm.styled";
-import AuthForm from "../../components/AuthForm/AuthForm";
-import BackgroundContainer from "../../components/Container/BackgroundContainer";
-import AuthFormContent from "../../components/AuthForm/AuthFormContent";
-import { useTheme } from "styled-components/native";
+import auth from "../../redux/auth/operations";
 
 const RegistrationScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -23,10 +25,11 @@ const RegistrationScreen = ({ navigation }) => {
   const [isHidden, setIsHidden] = useState(true);
 
   const theme = useTheme();
+  const dispatch = useDispatch();
 
-  const onRegister = () => {
-    const data = { name, email, password };
-    console.log(data);
+  const onRegister = async () => {
+    Keyboard.dismiss();
+    dispatch(auth.register({ name, email, password }));
   };
 
   return (

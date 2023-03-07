@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import { useTheme } from "styled-components/native";
+import { useDispatch } from "react-redux";
+import BackgroundContainer from "../../components/Container/BackgroundContainer";
+import AuthForm from "../../components/AuthForm/AuthForm";
+import AuthFormContent from "../../components/AuthForm/AuthFormContent";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import Link from "../../components/Link/Link";
@@ -11,9 +15,7 @@ import {
   InputControl,
   InputWrap,
 } from "../../components/AuthForm/AuthForm.styled";
-import BackgroundContainer from "../../components/Container/BackgroundContainer";
-import AuthForm from "../../components/AuthForm/AuthForm";
-import AuthFormContent from "../../components/AuthForm/AuthFormContent";
+import auth from "../../redux/auth/operations";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -21,10 +23,11 @@ const LoginScreen = ({ navigation }) => {
   const [isHidden, setIsHidden] = useState(true);
 
   const theme = useTheme();
+  const dispatch = useDispatch();
 
   const onLogin = () => {
-    const data = { email, password };
-    console.log(data);
+    Keyboard.dismiss();
+    dispatch(auth.login({ email, password }));
   };
 
   return (
