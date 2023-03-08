@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View } from "react-native";
+import { Image, View } from "react-native";
 import Post from "../../components/Post/Post";
 import Avatar from "../../components/Avatar/Avatar";
 import LogoutIcon from "../../components/icons/LogoutIcon";
@@ -15,50 +15,73 @@ import {
   TopArea,
 } from "./ProfileScreen.styled";
 import { useDimensions } from "../../contexts/Dimensions";
+import { useSelector } from "react-redux";
+import { selectName } from "../../redux/auth/selectors";
 
 const userImg = require("../../../assets/img/default-user.png");
 const postImg = require("../../../assets/img/post.jpg");
 
 const initPosts = [
   {
+    id: 0,
+    name: "Maksim",
+    email: "maksim@example.com",
+    avatar: userImg,
+    image: Image.resolveAssetSource(postImg).uri,
+    title: "My cake is on the keyboard",
+    comments: 1,
+    likes: 0,
+    locationString: "Kyiv",
+  },
+  {
     id: 1,
     name: "Natali Romanova",
     email: "email@example.com",
     avatar: userImg,
-    image: postImg,
-    text: "Forest",
+    image: Image.resolveAssetSource(postImg).uri,
+    title: "Forest",
     comments: 124,
     likes: 1140,
-    location: "Ivano-Frankivs'k Region, Ukraine",
+    locationString: "Ivano-Frankivs'k Region, Ukraine",
   },
   {
     id: 2,
     name: "Ivan Savchenko",
     email: "ivan@example.com",
     avatar: userImg,
-    image: postImg,
-    text: "Rest",
+    image: Image.resolveAssetSource(postImg).uri,
+    title: "Rest",
     comments: 13,
     likes: 2,
-    location: "Ukraine",
+    locationString: "Ukraine",
   },
   {
     id: 3,
     name: "Natalia Salnyk",
     email: "nata@example.com",
     avatar: userImg,
-    image: postImg,
-    text: "My favorite photo",
+    image: Image.resolveAssetSource(postImg).uri,
+    title: "My favorite photo",
     comments: 1,
     likes: 0,
-    location: "Sumy",
+    locationString: "Sumy",
   },
 ];
 
 const ProfileScreen = ({ navigation }) => {
   const [posts, setPosts] = useState(initPosts);
 
+  const name = useSelector(selectName);
+
   const { dimensions } = useDimensions();
+
+  const handleOpenMap = (location, locationString) => {
+    if (!location) return;
+
+    navigation.navigate("Map", {
+      params: { location, locationString },
+    });
+  };
 
   return (
     <BackgroundContainer>
@@ -70,10 +93,10 @@ const ProfileScreen = ({ navigation }) => {
               <LogoutIcon />
             </LogoutControl>
             <Avatar />
-            <ContentTitle>Natali Romanova</ContentTitle>
+            <ContentTitle>{name}</ContentTitle>
             <View>
               {posts.map((item) => (
-                <Post key={item.id} {...item} />
+                <Post onOpenMap={handleOpenMap} key={item.id} {...item} />
               ))}
             </View>
           </ProfileContent>
